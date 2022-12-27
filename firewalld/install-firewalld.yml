@@ -1,0 +1,15 @@
+---
+- name: Install & Start firewalld on host
+  hosts: linux
+  become: true
+  
+  tasks:
+  - name: Install firewalld
+    ansible.builtin.apt:
+       name: firewalld
+       state: latest
+       
+  - name: Start service 
+    service:
+       name: firewalld
+       state: started
