@@ -89,14 +89,14 @@ print("\n\n\n")
 for i in list_of_configurations:
     print(i.__dict__)
 
-#for i in list_of_policies:
-#    print(i.__dict__)
+for i in list_of_policies:
+    print(i.__dict__)
 
-#print("RULESETS OF POLICIES")
-#for i in list_of_policies:
-#    print(i.name)
-#    print(i.ruleset)
-#    print(i.security_message)
+print("RULESETS OF POLICIES")
+for i in list_of_policies:
+    print(i.name)
+    print(i.ruleset)
+    print(i.security_message)
 
 print("\n\n\n")
 
