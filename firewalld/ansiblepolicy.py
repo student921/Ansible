@@ -62,7 +62,7 @@ list_of_policies = []
 list_of_configurations = []
 
 #The third step reads the csv file and initializes policy objects which include the best practice configurations that will be appended in the list_of_policies
-with open('./policies.csv', newline='') as csvfile:
+with open('policies.csv', newline='') as csvfile:
     csv_reader = DictReader(csvfile)
     for row in csv_reader:
         new_policy = policy(
@@ -77,7 +77,7 @@ with open('./policies.csv', newline='') as csvfile:
         new_policy.set_policy_ruleset()
         list_of_policies.append(new_policy)
 
-with open('./configure-firewalld.yml', 'r') as stream:
+with open('configure-firewalld.yml', 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
