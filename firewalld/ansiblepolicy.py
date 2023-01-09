@@ -50,7 +50,7 @@ list_of_policies = []
 list_of_configurations = []
 
 #The third step reads the csv file and initializes policy objects which include the best practice configurations that will be appended in the list_of_policies
-with open('./policies.csv', newline='') as csvfile:
+with open('/home/student921/ansible-security/workspace/firewalld/Ansible/firewalld/policies.csv', newline='') as csvfile:
     csv_reader = DictReader(csvfile)
     for row in csv_reader:
         new_policy = policy(
@@ -65,7 +65,7 @@ with open('./policies.csv', newline='') as csvfile:
         new_policy.set_policy_ruleset()
         list_of_policies.append(new_policy)
 
-with open('./configure-firewalld.yml', 'r') as stream:
+with open('/home/student921/ansible-security/workspace/firewalld/Ansible/firewalld/configure-firewalld.yml', 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
@@ -84,26 +84,26 @@ with open('./configure-firewalld.yml', 'r') as stream:
     except yaml.YAMLError as error_message:
         print(error_message)
 
-print("\n\n\n")
+#print("\n\n\n")
 
-for i in list_of_configurations:
-    print(i.__dict__)
+#for i in list_of_configurations:
+    #print(i.__dict__)
 
-for i in list_of_policies:
-    print(i.__dict__)
+#for i in list_of_policies:
+    #print(i.__dict__)
 
-print("RULESETS OF POLICIES")
-for i in list_of_policies:
-    print(i.name)
-    print(i.ruleset)
-    print(i.security_message)
+#print("RULESETS OF POLICIES")
+#for i in list_of_policies:
+    #print(i.name)
+    #print(i.ruleset)
+    #print(i.security_message)
 
-print("\n\n\n")
+#print("\n\n\n")
 
-print("RULESETS OF CONFIGURATIONS")
-for i in list_of_configurations:
-    print(i.name)
-    print(i.ruleset)
+#print("RULESETS OF CONFIGURATIONS")
+#for i in list_of_configurations:
+    #print(i.name)
+    #print(i.ruleset)
 
 
 print(r"""
