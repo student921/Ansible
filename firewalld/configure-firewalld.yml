@@ -1,5 +1,5 @@
 ---
-- name: Implementing security measures for linux server.
+- name: Implementing Firewalld Module for Linux Server.
   hosts: linux
   become: true
   
@@ -46,14 +46,3 @@
     ansible.builtin.service:
         name: firewalld
         state: restarted
-        
-  - name: sshd - Disable SSH password authentication.
-    ansible.builtin.lineinfile:
-        dest: /etc/ssh/sshd_config 
-        regexp: '^(#\s*)?PasswordAuthentication '
-        line: 'PasswordAuthentication no'
-            
-  - name: Restart sshd.
-    ansible.builtin.service:  
-       name: sshd
-       state: restarted
