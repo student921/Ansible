@@ -103,18 +103,18 @@ with open('/media/sf_shared-folder/ansible/firewalld/configure-firewalld.yml', '
 #for i in list_of_policies:
     #print(i.__dict__)
 
-print("RULESETS OF POLICIES")
-for i in list_of_policies:
-    print(i.name)
-    print(i.ruleset)
-    print(i.security_message)
+#print("RULESETS OF POLICIES")
+#for i in list_of_policies:
+#    print(i.name)
+#    print(i.ruleset)
+#    print(i.security_message)
 
-print("\n\n\n")
+#print("\n\n\n")
 
-print("RULESETS OF CONFIGURATIONS")
-for i in list_of_configurations:
-    print(i.name)
-    print(i.ruleset)
+#print("RULESETS OF CONFIGURATIONS")
+#for i in list_of_configurations:
+#    print(i.name)
+#    print(i.ruleset)
 
 
 print(r"""
@@ -137,7 +137,7 @@ Version:   1.0
 
       """)
 
-print('Checking for possible security issues with configuration policies...')
+print('Checking for possible security issues with firewall rules...')
 
 list_of_security_issues = []
 
@@ -152,18 +152,18 @@ for policy in list_of_policies:
         list_of_security_issues.append(policy.security_message)
 
 if list_of_security_issues:
-    print("Ansible Policy found the following security isses:\n")
+    print("Ansible Policy found the following possible security isses:\n")
 
     for security_issue in list_of_security_issues:
         print("[-] " + security_issue)
 
 else:
-    print("No security issues found in Ansible configuration .")
+    print("No possible security issues found in firewall configuration .")
 
-print("\n\n")
+#print("\n\n")
 
 
-print(list_of_policies[2].ruleset)
-print(list_of_configurations[1].ruleset)
-print(list_of_security_issues)
+#print(list_of_policies[2].ruleset)
+#print(list_of_configurations[1].ruleset)
+#print(list_of_security_issues)
 
