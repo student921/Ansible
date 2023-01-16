@@ -24,7 +24,7 @@
   - name: Firewalld - Disable http for Zone public.
     ansible.posix.firewalld:
         zone: public
-        service: "httpx"
+        service: "http"
         permanent: true
         state: disabled
        
