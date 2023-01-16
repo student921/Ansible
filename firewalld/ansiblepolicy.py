@@ -126,7 +126,7 @@ Version:   1.0
 
       """)
 
-print('Checking for possible security issues with firewall rules...')
+print('Checking for possible security issues with firewall configuration...')
 
 list_of_security_issues = []
 
@@ -135,19 +135,36 @@ for policy in list_of_policies:
     for configuration in list_of_configurations:
 
         if policy.ruleset.items() <= configuration.ruleset.items():
+
             break
 
     else:
-        list_of_security_issues.append(policy.security_message)
+        list_of_security_issues.append({"security_message" : policy.security_message})
+
+        for policy_key in policy.ruleset:
+
+            for config_key in configuration.ruleset:
+
+                if policy_key == config_key and policy.ruleset[policy_key] != configuration.ruleset[config_key]:
+
+                    list_of_security_issues[-1]["parameter"] = policy_key
+                    list_of_security_issues[-1]["config"] = configuration.ruleset[config_key]
+                    list_of_security_issues[-1]["policy"] = policy.ruleset[policy_key]
+
+                else:
+                    continue
+
 
 if list_of_security_issues:
     print("Ansible Policy found the following possible security isses:\n")
 
     for security_issue in list_of_security_issues:
-        print("[-] " + security_issue)
+
+            print("[-] " + security_issue["security_message"])
+            print("[-] Issue: Parameter " + security_issue["parameter"] + " configured as " + security_issue["config"] + ", should be " + security_issue["policy"] + ".\n")
 
 else:
-    print("No possible security issues found in firewall configuration .")
+    print("No possible security issues found in firewall configuration.")
 
 #print("\n\n")
 
@@ -155,4 +172,3 @@ else:
 #print(list_of_policies[2].ruleset)
 #print(list_of_configurations[1].ruleset)
 #print(list_of_security_issues)
-
