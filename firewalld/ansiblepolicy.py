@@ -5,14 +5,13 @@ from csv import DictReader
 
 #The security policies for firewalld are maintained in a csv file. The first step is to create a class that has the attributes of possible ansible firewalld configurations.
 class policy:
-    def __init__(self, name='', zone='', source='', permanent='', state='', service='', port='', security_message=''):
+    def __init__(self, name='', zone='', source='', permanent='', state='', service='', security_message=''):
         self.name = name
         self.zone = zone
         self.source = source
         self.permanent = permanent
         self.state = state
         self.service = service
-        self.port = port
         self.security_message = security_message
         self.ruleset = {}
 
@@ -60,7 +59,6 @@ with open('policies.csv', newline='') as csvfile:
                         permanent=row["permanent"],
                         state=row["state"],
                         service=row["service"],
-                        port=row["port"],
                         security_message=row["security_message"])
         new_policy.set_policy_ruleset()
         list_of_policies.append(new_policy)
