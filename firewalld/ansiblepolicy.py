@@ -159,7 +159,7 @@ if list_of_security_issues:
             print("[!] " + security_issue["security_message"])
             print("[*] Please check the following policy parameters in configuration file:")
             
-            for key, value in security_isse["policy_rules"]:
+            for key, value in security_issue["policy_rules"]:
                 print("[-] " + key + " : " + value)
 
 else:
