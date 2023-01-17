@@ -145,7 +145,7 @@ for policy in list_of_policies:
 
                 if policy_key == config_key and policy.ruleset[policy_key] != configuration.ruleset[config_key]:
 
-                    list_of_security_issues[-1]["policy_rules"] = policy
+                    list_of_security_issues[-1]["policy_rules"] = policy.ruleset.items()
 
                 else:
                     continue
