@@ -5,7 +5,7 @@ from csv import DictReader
 
 #The security policies for firewalld are maintained in a csv file. The first step is to create a class that has the attributes of possible ansible firewalld configurations.
 class policy:
-    def __init__(self, name='', zone='', source='', permanent='', state='', service='', security_message=''):
+    def __init__(self, name='', zone='', service='', source='', permanent='', state='', security_message=''):
         self.name = name
         self.zone = zone
         self.source = source
