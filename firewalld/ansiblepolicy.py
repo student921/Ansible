@@ -145,9 +145,7 @@ for policy in list_of_policies:
 
                 if policy_key == config_key and policy.ruleset[policy_key] != configuration.ruleset[config_key]:
 
-                    list_of_security_issues[-1]["parameter"] = policy_key
-                    list_of_security_issues[-1]["config"] = configuration.ruleset[config_key]
-                    list_of_security_issues[-1]["policy"] = policy.ruleset[policy_key]
+                    list_of_security_issues[-1]["policy_rules"] = policy
 
                 else:
                     continue
@@ -158,8 +156,11 @@ if list_of_security_issues:
 
     for security_issue in list_of_security_issues:
 
-            print("[-] " + security_issue["security_message"])
-            print("[-] Issue: Parameter " + security_issue["parameter"] + " configured as " + security_issue["config"] + ", should be " + security_issue["policy"] + ".\n")
+            print("[!] " + security_issue["security_message"])
+            print("[*] Please check the following policy parameters in configuration file:")
+            
+            for key, value in security_isse["policy_rules"]:
+                print("[-] " + key + " : " + value)
 
 else:
     print("No possible security issues found in firewall configuration.")
