@@ -8,10 +8,10 @@ class policy:
     def __init__(self, name='', zone='', service='', source='', permanent='', state='', security_message=''):
         self.name = name
         self.zone = zone
+        self.service = service
         self.source = source
         self.permanent = permanent
         self.state = state
-        self.service = service
         self.security_message = security_message
         self.ruleset = {}
 
