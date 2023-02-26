@@ -15,7 +15,7 @@ list_of_ios_tasks = []
 list_of_security_practices = []
 list_of_enforced_security_practices = []
 
-with open('security_practices.yml', 'r') as stream:
+with open('/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/security_practices.yml', 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
@@ -28,7 +28,7 @@ with open('security_practices.yml', 'r') as stream:
     except yaml.YAMLError as error_message:
         print(error_message)
 
-with open('configure_router.yml', 'r') as stream:
+with open('/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/configure_router.yml', 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
