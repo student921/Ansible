@@ -1,0 +1,17 @@
+[linux]
+
+192.168.180.162
+
+[linux:vars]
+ansible_user=managednode
+ansible_ssh_private_key_file=~/.ssh/student921_idrsa
+
+[routers]
+
+r1
+
+[routers:vars]
+ansible_user=master
+ansible_ssh_pass=arbeit
+ansible_network_os=ios
+ansible_become_password=arbeit
