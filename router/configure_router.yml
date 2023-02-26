@@ -14,7 +14,12 @@
         - configure terminal
         - ip ssh time-out 60
         - ip ssh authentication-retries 3
-        
+
+    - name: Secure passwords with service encryption
+      ios_command:
+        commands:
+        - configure terminal
+        - service password-encryption
         
     - name: Configure VTY Transport SSH [Disable Telnet]
       ios_command:
