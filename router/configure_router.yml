@@ -75,3 +75,9 @@
         - line console 0
         - login authentication default
         - exit
+        
+    - name: Transfer running-config to ftp server
+      ios_command:
+        commands:
+        - copy running-config ftp://192.168.180.189/ansible-security/workspace/CiscoSec/Ansible/router/router_config.txt
+        
