@@ -1,0 +1,90 @@
+---
+
+- name: CONFIGURE ROUTER
+  hosts: routers
+  gather_facts: false
+  connection: network_cli
+  become: yes
+  become_method: enable
+
+  tasks:
+    - name: Configure SSH restrictions for Remote Device Access
+      ios_command:
+        commands:
+        - configure terminal
+        - ip ssh time-out 60
+        - ip ssh authentication-retries 3
+        
+    - name: Secure passwords with service encryption
+      ios_command:
+        commands:
+        - configure terminal
+        - service password-encryption
+        
+    - name: Configure VTY Transport SSH [Disable Telnet]
+      ios_command:
+        commands:
+        - configure terminal
+        - line vty 0 15
+        - transport input ssh
+    
+    - name: Configure Timeout for Login Sessions
+      ios_command:
+        commands:
+        - configure terminal
+        - line vty 0 4
+        - exec-timeout 9 0
+        - exit
+        - line vty 5 15
+        - exec-timeout 9 0
+        - exit
+        
+    - name: Disable Auxiliary Port
+      ios_command:
+        commands:
+        - configure terminal
+        - line aux 0
+        - no exec
+        - exec-timeout 9 0
+        - transport input none
+        - exit
+        
+    - name: Set Timezone and Configure Service Timestamps for Debug and Log Messages
+      ios_command:
+        commands:
+        - configure terminal
+        - clock timezone CET +1
+        - service timestamps debug datetime msec show-timezone localtime
+        - service timestamps log datetime msec show-timezone localtime
+        
+    - name: Configure Local AAA Service Method
+      ios_command:
+        commands:
+        - configure terminal
+        - aaa new-model
+        - aaa authentication login default local
+    
+    - name: Configure Local Authentication for Console Port
+      ios_command:
+        commands:
+        - configure terminal
+        - line console 0
+        - login authentication default
+        - exit
+        
+    - name: Secure configurations
+      ios_command:
+        commands:
+        - configure terminal
+        - logging trap informational
+        - ip ssh version 2
+        - service tcp-keepalives-out
+        - logging enable
+        - line tty 0 4
+        - exec-timeout 10 0
+        - exit
+        - line console 0
+        - exec-timeout 10 0
+        - exit 
+        - logging source-interface loopback 172.168.30.200
+        - enable secret <user>
