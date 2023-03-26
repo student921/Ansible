@@ -87,4 +87,4 @@
         - exec-timeout 10 0
         - exit 
         - logging source-interface loopback 1
-        - enable secret <user>
+        - enable secret arbeit
