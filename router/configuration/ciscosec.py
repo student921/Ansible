@@ -42,7 +42,7 @@ with open('cis_controls_v7v8_ig1.yml', 'r') as stream:
         print(error_message)
 
 #Initialize cis recommendations that fullfill complexity
-with open('cis_controls_v7v8_ig1.yml', 'r') as stream:
+with open('/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/configuration/cis_controls_v7v8_ig1.yml', 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
@@ -60,7 +60,7 @@ with open('cis_controls_v7v8_ig1.yml', 'r') as stream:
     except yaml.YAMLError as error_message:
         print(error_message)
 
-with open('configure_router.yml', 'r') as stream:
+with open('/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/configuration/configure_router.yml', 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
