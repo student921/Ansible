@@ -1,0 +1,232 @@
+---
+
+- recommendations:
+
+    - name: Set 'exec-timeout' to less than or equal to 10 minutes for 'line aux 0'
+      complex: True
+      rationale: This prevents unauthorized users from misusing abandoned sessions. For example, if the network administrator leaves for the day and leaves a computer open with an enabled login session accessible. There is a trade-off here between security (shorter timeouts) and usability (longer timeouts). Review your local policies and operational needs to determine the best timeout value. In most cases, this should be no more than 10 minutes.
+      impact: Organizations should prevent unauthorized use of unattended or abandoned sessions by an automated control. Enabling 'exec-timeout' with an appropriate length of minutes or seconds prevents unauthorized access of abandoned sessions.
+      remediation: Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time.
+      configure_commands:
+        - hostname(config)#line aux 0
+        - hostname(config-line)#exec-timeout <timeout_in_minutes> <timeout_in_seconds>
+
+    - name: Set 'exec-timeout' to less than or equal to 10 minutes 'line console 0'
+      complex: True
+      rationale: This prevents unauthorized users from misusing abandoned sessions. For example, if the network administrator leaves for the day and leaves a computer open with an enabled login session accessible. There is a trade-off here between security (shorter timeouts) and usability (longer timeouts). Review your local policies and operational needs to determine the best timeout value. In most cases, this should be no more than 10 minutes.
+      impact: Organizations should prevent unauthorized use of unattended or abandoned sessions by an automated control. Enabling 'exec-timeout' with an appropriate length reduces the risk of unauthorized access of abandoned sessions.
+      remediation: Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time.
+      configure_commands:
+        - hostname(config)#line con 0
+        - hostname(config-line)#exec-timeout <timeout_in_minutes> <timeout_in_seconds>
+      check_commands:
+        - line con 0
+        - exec-timeout
+
+    - name: Set 'exec-timeout' less than or equal to 10 minutes 'line tty'
+      complex: True
+      rationale: This prevents unauthorized users from misusing abandoned sessions. For example, if the network administrator leaves for the day and leaves a computer open with an enabled login session accessible. There is a trade-off here between security (shorter timeouts) and usability (longer timeouts). Review your local policies and operational needs to determine the best timeout value. In most cases, this should be no more than 10 minutes.
+      impact: Organizations should prevent unauthorized use of unattended or abandoned sessions by an automated control. Enabling 'exec-timeout' with an appropriate length reduces the risks of unauthorized access of abandoned sessions.
+      remediation: Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time.
+      configure_commands:
+        - hostname(config)#line tty {line_number} [ending_line_number]
+        - hostname(config-line)#exec-timeout <timeout_in_minutes> <timeout_in_seconds>
+
+    - name: Set 'exec-timeout' to less than or equal to 10 minutes 'line vty'
+      complex: True
+      rationale: This prevents unauthorized users from misusing abandoned sessions. For example, if the network administrator leaves for the day and leaves a computer open with an enabled login session accessible. There is a trade-off here between security (shorter timeouts) and usability (longer timeouts). Review your local policies and operational needs to determine the best timeout value. In most cases, this should be no more than 10 minutes.
+      impact: Organizations should prevent unauthorized use of unattended or abandoned sessions by an automated control. Enabling 'exec-timeout' with an appropriate length of minutes or seconds prevents unauthorized access of abandoned sessions.
+      remediation: Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time.
+      configure_commands:
+        - hostname(config)#line vty 0 15
+        - or hostname(config)#line vty 0 4 and hostname(config)#line vty 5 15
+        - hostname(config-line)#exec-timeout <timeout_in_minutes> <timeout_in_seconds>
+
+    - name: Set 'transport input none' for 'line aux 0'
+      complex: False
+      rationale: Unused ports should be disabled, if not required, since they provide a potential access path for attackers. Some devices include both an auxiliary and console port that can be used to locally connect to and configure the device. The console port is normally the primary port used to configure the device; even when remote, backup administration is required via console server or Keyboard, Video, Mouse (KVM) hardware. The auxiliary port is primarily used for dial-up administration via an external modem; instead, use other available methods.
+      impact: Organizations should prevent all unauthorized access of auxiliary ports by disabling all protocols using the 'transport input none' command.
+      remediation: Disable the inbound connections on the auxiliary port.
+      configure_commands:
+        - hostname(config)#line aux 0
+        - hostname(config-line)#transport input none
+      check_commands:
+        - line aux 0
+        - transport input none
+
+    - name: Set the 'banner-text' for 'banner exec'
+      complex: False
+      rationale: Network banners are electronic messages that provide notice of legal rights to users of computer networks.
+      impact: Organizations provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner exec command.
+      remediation: Configure the EXEC banner presented to a user when accessing the devices enable prompt.
+      configure_commands:
+        - hostname(config)#banner exec c
+      check_commands:
+        - banner exec c
+
+    - name: Set 'password' for 'enable secret'
+      complex: False
+      rationale: Requiring the enable secret setting protects privileged EXEC mode. By default, a strong password is not required, a user can just press the Enter key at the Password prompt to start privileged mode. The enable password command causes the device to enforce use of a password to access privileged mode. Enable secrets use a one-way cryptographic hash (MD5). This is preferred to Level 7 enable passwords that use a weak, well-known, and easily reversible encryption algorithm.
+      impact: Organizations should protect privileged EXEC mode through policies requiring the 'enabling secret' setting, which enforces a one-way cryptographic hash (MD5).
+      remediation: Configure a strong, enable secret password.
+      configure_commands:
+        - hostname(config)#enable secret {ENABLE_SECRET_PASSWORD}
+      check_commands:
+        - enable secret
+
+    - name: Set maximimum value for 'ip ssh authentication-retries'
+      complex: False
+      rationale: This limits the number of times an unauthorized user can attempt a password without having to establish a new SSH login attempt. This reduces the potential for success during online brute force attacks by limiting the number of login attempts per SSH connection.
+      impact: Organizations should implement a security policy limiting the number of authentication attempts for network administrators and enforce the policy through the 'ip ssh authentication-retries' command.
+      remediation: Configure the SSH timeout.
+      configure_commands:
+        - hostname(config)#ip ssh authentication-retries <number>
+      check_commands:
+        - ip ssh authentication-retries
+
+    - name: Set version 2 for 'ip ssh version'
+      complex: False
+      rationale: SSH Version 1 has been subject to a number of serious vulnerabilities and is no longer considered to be a secure protocol, resulting in the adoption of SSH Version 2 as an Internet Standard in 2006. Cisco routers support both versions, but due to the weakness of SSH Version 1 only the later standard should be used.
+      impact: To reduce the risk of unauthorized access, organizations should implement a security policy to review their current protocols to ensure the most secure protocol versions are in use.
+      remediation: Configure the router to use SSH version 2.
+      configure_commands:
+        - hostname(config)#ip ssh version 2
+      check_commands:
+        - ip ssh version 2
+
+    - name: Set 'service tcp-keepalives-out'
+      complex: False
+      rationale: Stale connections use resources and could potentially be hijacked to gain illegitimate access. The TCP keepalives-in service generates keepalive packets on idle incoming network connections (initiated by remote host). This service allows the device to detect when the remote host fails and drop the session. If enabled, keepalives are sent once per minute on idle connections. The closes connection is closed within five minutes if no keepalives are received or immediately if the host replies with a reset packet.
+      impact: To reduce the risk of unauthorized access, organizations should implement a security policy restricting how long to allow terminated sessions and enforce this policy through the use of 'tcp-keepalives-out' command.
+      remediation: Enable TCP keepalives-out service.
+      configure_commands:
+        - hostname(config)#service tcp-keepalives-out
+      check_commands:
+        - service tcp-keepalives-out
+
+    - name: Enable 'aaa new-model'
+      complex: False
+      rationale: Authentication, authorization and accounting (AAA) services provide an authoritative source for managing and monitoring access for devices. Centralizing control improves consistency of access control, the services that may be accessed once authenticated and accountability by tracking services accessed. Additionally, centralizing access control simplifies and reduces administrative costs of account provisioning and de-provisioning, especially when managing a large number of devices.
+      impact: Implementing Cisco AAA is significantly disruptive as former access methods are immediately disabled. Therefore, before implementing Cisco AAA, the organization should carefully review and plan their authentication criteria (logins & passwords, challenges & responses, and token technologies), authorization methods, and accounting requirements.
+      remediation: Globally enable authentication, authorization and accounting (AAA) using the new-model command.
+      configure_commands:
+        - hostname(config)#aaa new-model
+      check_commands:
+        - aaa new-model
+
+    - name: Enable 'aaa authentication login'
+      complex: False
+      rationale: Using AAA authentication for interactive management access to the device provides consistent, centralized control of your network. The default under AAA (local or network) is to require users to log in using a valid user name and password. This rule applies for both local and network AAA. Fallback mode should also be enabled to allow emergency access to the router or switch in the event that the AAA server was unreachable, by utilizing the LOCAL keyword after the AAA server-tag.
+      impact: Implementing Cisco AAA is significantly disruptive as former access methods are immediately disabled. Therefore, before implementing Cisco AAA, the organization should carefully review and plan their authentication methods such as logins and passwords, challenges and responses, and which token technologies will be used.
+      remediation: Configure AAA authentication method(s) for login authentication.
+      configure_commands:
+        - hostname(config)#aaa authentication login {default | aaa_list_name} [passwd-expiry] [method1] [method2]
+      check_commands:
+        - aaa authentication login
+
+    - name: Set 'aaa accounting' to log all privileged use commands using 'commands 15'
+      complex: False
+      rationale: Authentication, authorization and accounting (AAA) systems provide an authoritative source for managing and monitoring access for devices. Centralizing control improves consistency of access control, the services that may be accessed once authenticated and accountability by tracking services accessed. Additionally, centralizing access control simplifies and reduces administrative costs of account provisioning and de-provisioning, especially when managing a large number of devices. AAA Accounting provides a management and audit trail for user and administrative sessions through RADIUS or TACACS+.
+      impact: Enabling 'aaa accounting' for privileged commands records and sends activity to the accounting servers and enables organizations to monitor and analyze privileged activity.
+      remediation: Configure AAA accounting for commands.
+      configure_commands:
+        - hostname(config)#aaa accounting commands 15 {default | list-name | guarantee-first} {start-stop | stop-only | none} {radius | group group-name}
+      check_commands:
+        - aaa accounting commands 15
+
+    - name: Set 'aaa accounting exec'
+      complex: False
+      rationale: Authentication, authorization and accounting (AAA) systems provide an authoritative source for managing and monitoring access for devices. Centralizing control improves consistency of access control, the services that may be accessed once authenticated and accountability by tracking services accessed. Additionally, centralizing access control simplifies and reduces administrative costs of account provisioning and de-provisioning, especially when managing a large number of devices. AAA Accounting provides a management and audit trail for user and administrative sessions through RADIUS and TACACS+.
+      impact: Enabling aaa accounting exec creates accounting records for the EXEC terminal sessions on the network access server. These records include start and stop times, usernames, and date information. Organizations should regularly monitor these records for exceptions, remediate issues, and report findings.
+      remediation: Configure AAA accounting for EXEC shell session.
+      configure_commands:
+      - hostname(config)#aaa accounting exec {default | list-name | guarantee-first} {start-stop | stop-only | none} {radius | group group-name}
+      check_commands:
+      - aaa accounting exec
+
+    - name: Set 'aaa accounting network'
+      complex: False
+      rationale: Authentication, authorization and accounting (AAA) systems provide an authoritative source for managing and monitoring access for devices. Centralizing control improves consistency of access control, the services that may be accessed once authenticated and accountability by tracking services accessed. Additionally, centralizing access control simplifies and reduces administrative costs of account provisioning and de-provisioning, especially when managing a large number of devices. AAA Accounting provides a management and audit trail for user and administrative sessions through RADIUS and TACACS+.
+      impact: Implementing aaa accounting network creates accounting records for a method list including ARA, PPP, SLIP, and NCPs sessions. Organizations should regular monitor these records for exceptions, remediate issues, and report findings.
+      remediation: Configure AAA accounting for connections.
+      configure_commands:
+        - hostname(config)#aaa accounting network {default | list-name | guarantee-first} {start-stop | stop-only | none} {radius | group group-name}
+      check_commands:
+        - aaa accounting network
+
+    - name: Set 'aaa accounting system'
+      complex: False
+      rationale: Authentication, authorization and accounting (AAA) systems provide an authoritative source for managing and monitoring access for devices. Centralizing control improves consistency of access control, the services that may be accessed once authenticated and accountability by tracking services accessed. Additionally, centralizing access control simplifies and reduces administrative costs of account provisioning and de-provisioning, especially when managing a large number of devices. AAA Accounting provides a management and audit trail for user and administrative sessions through RADIUS and TACACS+.
+      impact: Enabling aaa accounting system creates accounting records for all system-level events. Organizations should regular monitor these records for exceptions, remediate issues, and report findings regularly.
+      remediation: Configure AAA accounting system.
+      configure_commands:
+        - hostname(config)#aaa accounting system {default | list-name | guarantee-first} {start-stop | stop-only | none} {radius | group group-name}
+      check_commands:
+        - aaa accounting system
+
+    - name: Set 'privilege 1' for local users
+      complex: True
+      rationale: Default device configuration does not require strong user authentication potentially enabling unfettered access to an attacker that is able to reach the device. Creating a local account with privilege level 1 permissions only allows the local user to access the device with EXEC-level permissions and will be unable to modify the device without using the enable password. In addition, require the use of an encrypted password as well.
+      impact: Organizations should create policies requiring all local accounts with 'privilege level 1' with encrypted passwords to reduce the risk of unauthorized access. Default configuration settings do not provide strong user authentication to the device.
+      remediation: Set the local user to privilege level 1.
+      configure_commands: 
+        - hostname(config)#username <LOCAL_USERNAME> privilege 1
+
+    - name: Set 'transport input ssh' for 'line vty' connections
+      complex: True
+      rationale: Configuring VTY access control restricts remote access to only those authorized to manage the device and prevents unauthorized users from accessing the system.
+      impact: To reduce risk of unauthorized access, organizations should require all VTY management line protocols to be limited to ssh.
+      remediation: Apply SSH to transport input on all VTY management lines
+      configure_commands:
+        - hostname(config)#line vty 0 15
+        - hostname(config-line)#transport input ssh
+
+    - name: Set the 'banner-text' for 'banner login'
+      complex: False
+      rationale: Network banners are electronic messages that provide notice of legal rights to users of computer networks.
+      impact: Organizations provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner login command.
+      remediation: Configure the device so a login banner presented to a user attempting to access the device.
+      configure_commands:
+        - hostname(config)#banner login c
+      check_commands:
+        - banner login c
+
+    - name: Set the 'banner-text' for 'banner motd'
+      complex: False
+      rationale: Network banners are electronic messages that provide notice of legal rights to users of computer networks.
+      impact: Organizations provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner motd command.
+      remediation: Configure the message of the day (MOTD) banner presented when a user first connects to the device.
+      configure_commands:
+        - hostname(config)#banner motd c
+      check_commands:
+        - banner motd c
+
+    - name: Set 'logging on'
+      complex: False
+      rationale: Logging provides a chronological record of activities on the Cisco device and allows monitoring of both operational and security related events.
+      impact: Enabling the Cisco IOS 'logging on' command enforces the monitoring of technology risks for the organizations' network devices.
+      remediation: Enable system logging.
+      configure_commands:
+        - hostname(config)#logging enable
+      check_commands:
+        - logging enable
+
+    - name: Set 'logging trap informational'
+      complex: False
+      rationale: This determines the severity of messages that will generate simple network management protocol (SNMP) trap and or syslog messages. This setting should be set to either "debugging" (7) or "informational" (6), but no lower.
+      impact: Logging is an important process for an organization managing technology risk. The 'logging trap' command sets the severity of messages and enforces the logging process.
+      remediation: Configure SNMP trap and syslog logging level.
+      configure_commands:
+        - hostname(config)#logging trap informational
+      check_commands:
+        - logging trap informational
+
+    - name: Set 'logging source interface'
+      complex: False
+      rationale: This is required so that the router sends log messages to the logging server from a consistent IP address.
+      impact: Logging is an important process for an organization managing technology risk and establishing a consistent source of messages for the logging host is critical. The 'logging source interface loopback' command sets a consistent IP address to send messages to the logging host and enforces the logging process.
+      remediation: Bind logging to the loopback interface.
+      configure_commands:
+        - hostname(config)#logging source-interface loopback {loopback_interface_number}
+      check_commands:
+        - logging source-interface loopback
