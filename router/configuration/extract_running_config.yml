@@ -1,6 +1,6 @@
 ---
 
-- name: CONFIGURE ROUTER
+- name: FTP-Transfer
   hosts: routers
   gather_facts: false
   connection: network_cli
