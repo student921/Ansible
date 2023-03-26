@@ -115,21 +115,3 @@ def check_transport_input_ssh_vty015(recommendation_object, list_of_ios_tasks):
                 break
     else:
         return recommendation_object
-    
-def check_input_shh(recommendation_object, list_of_ios_tasks):
-    #Set 'exec-timeout' to less than or equal to 10 minutes 'line vty'
-    for task in list_of_ios_tasks:
-        if "line vty 0 15" in task.commands and "transport input ssh" in task.commands:
-            break
-
-        elif "line vty 0 4" and "line vty 5 15" in task.commands:
-            #We create a list of timeouts since more timeouts were set
-            number_of_transport_input_ssh = 0
-            for command in task.commands:
-                if "transport input ssh" == command:
-                    number_of_transport_input_ssh = number_of_transport_input_ssh+1
-            #There have to be at least 2 "transport input ssh set"
-            if number_of_transport_input_ssh >= 2:
-                break
-    else:
-        return recommendation_object
