@@ -80,7 +80,7 @@
         - ip ssh version 2
         - service tcp-keepalives-out
         - logging on
-        - line tty 0 4
+        - line tty 1
         - exec-timeout 10 0
         - exit
         - line console 0
