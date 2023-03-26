@@ -209,7 +209,7 @@
       configure_commands:
         - hostname(config)#logging enable
       check_commands:
-        - logging enable
+        - logging on
 
     - name: Set 'logging trap informational'
       complex: False
