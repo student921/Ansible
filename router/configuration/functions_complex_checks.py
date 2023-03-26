@@ -81,7 +81,7 @@ def check_exec_timeout_line_vty015_10_minutes(recommendation_object, list_of_ios
 def check_exec_timeout_line_tty_10_minutes(recommendation_object, list_of_ios_tasks):
     #Set 'exec-timeout' to less than or equal to 10 minutes 'line tty'
     for task in list_of_ios_tasks:
-        if "line tty 0 4" in task.commands:
+        if "line tty 1" in task.commands:
             for command in task.commands:
                 if "exec-timeout" in command:
                     try:
@@ -116,7 +116,7 @@ def check_transport_input_ssh_vty015(recommendation_object, list_of_ios_tasks):
     else:
         return recommendation_object
     
-def aaa_authentication_login(recommendation_object, list_of_ios_tasks):
+def check_input_shh(recommendation_object, list_of_ios_tasks):
     #Set 'exec-timeout' to less than or equal to 10 minutes 'line vty'
     for task in list_of_ios_tasks:
         if "line vty 0 15" in task.commands and "transport input ssh" in task.commands:
