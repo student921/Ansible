@@ -22,7 +22,7 @@ list_of_ios_tasks = []
 list_of_enforced_security_practices = []
 
 #Initialize cis recommendations that don't fullfill complexity
-with open('cis_controls_v7v8_ig1.yml', 'r') as stream:
+with open('/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/configuration/cis_controls_v7v8_ig1.yml', 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
