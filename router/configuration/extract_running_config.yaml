@@ -1,1 +1,18 @@
+---
 
+- name: CONFIGURE ROUTER
+  hosts: routers
+  gather_facts: false
+  connection: network_cli
+  become: yes
+  become_method: enable
+
+  tasks:
+    - name: Extract Running-Config and send to Ansible Security Tower
+      ios_command:
+        commands:
+        - copy running-config ftp
+        prompt: "Address or name of remote host []?"
+        default: "192.168.180.189"
+        register: config
+    - debug: msg="{{ config.stdout }}"
