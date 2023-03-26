@@ -79,7 +79,7 @@
         - logging trap informational
         - ip ssh version 2
         - service tcp-keepalives-out
-        - logging enable
+        - logging on
         - line tty 0 4
         - exec-timeout 10 0
         - exit
