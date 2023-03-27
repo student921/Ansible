@@ -11,7 +11,7 @@
         
     - name: Configure ACL Router
       cisco.ios.ios_acls:
-        state: replaced
+        state: deleted
         config:
         - afi: ipv4
           acls:
