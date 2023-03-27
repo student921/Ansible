@@ -1,0 +1,17 @@
+---
+
+- name: CONFIGURE ROUTER
+  hosts: routers
+  gather_facts: false
+  connection: network_cli
+  become: yes
+  become_method: enable
+
+  tasks:
+    - name: Unassign acl from interface
+      ios_command:
+        commands:
+        - configure terminal
+        - no ip access-list extended security_acl
+        - interface vlan 3
+        - no ip access-group security_acl in
