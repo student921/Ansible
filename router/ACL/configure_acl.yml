@@ -1,0 +1,162 @@
+---
+
+- name: CONFIGURE ACL
+  hosts: routers
+  gather_facts: false
+  connection: network_cli
+  become: yes
+  become_method: enable
+  
+  tasks:
+        
+    - name: Configure ACL Router
+      cisco.ios.ios_acls:
+        state: replaced
+        config:
+        - afi: ipv4
+          acls:
+          - name: security_acl
+            acl_type: extended
+            aces:
+        
+            - grant: deny
+              sequence: 10
+              protocol_options:
+                tcp:
+                  ack: true
+              source:
+                address: 192.168.180.0
+                wildcard_bits: 0.0.0.255
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255
+                port_protocol:
+                  eq: telnet
+
+            - grant: deny
+              sequence: 11
+              protocol_options:
+                tcp:
+                  ack: true          
+              source:
+                address: 192.168.180.0
+                wildcard_bits: 0.0.0.255
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255
+                port_protocol:
+                  eq: ftp
+            - grant: deny
+              sequence: 12
+              protocol_options:
+                tcp:
+                  ack: true
+              source:
+                address: 192.168.180.0
+                wildcard_bits: 0.0.0.255
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255
+                port_protocol:
+                  eq: 69
+
+            - grant: permit
+              sequence: 20
+              protocol_options:
+                ip: true
+                udp: true
+              source:
+                address: 192.168.180.0
+                wildcard_bits: 0.0.0.255
+              destination:
+                host: 192.168.180.2
+                wildcard_bits: 0.0.0.255
+            - grant: permit
+              sequence: 21
+              protocol_options:
+                tcp:
+                  syn: true
+              source:
+                host: 192.168.180.189
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+                port_protocol:
+                  eq: 22
+            - grant: permit
+              sequence: 22
+              protocol_options:
+                tcp:
+                  syn: true
+              source:
+                any: true
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+                port_protocol:
+                  eq: 443
+
+            - grant: deny
+              sequence: 30
+              source:
+                address: any
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+              protocol_options:
+                icmp: 
+                 redirect: true
+            - grant: permit
+              sequence: 31
+              source:
+                address: 192.168.180.0
+                wildcard_bits: 0.0.0.255
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+              protocol_options:
+                icmp: 
+                  echo_reply: true
+            - grant: permit
+              sequence: 32
+              source:
+                address: 192.168.180.0
+                wildcard_bits: 0.0.0.255
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+              protocol_options:
+                icmp: 
+                  time_exceeded: true
+            - grant: permit
+              sequence: 33
+              source:
+                address: 192.168.180.0
+                wildcard_bits: 0.0.0.255
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+              protocol_options:
+                icmp: 
+                  unreachable: true
+                  
+            - grant: deny
+              sequence: 34
+              protocol_options:
+                ip: true              
+              source:
+                address: any
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+              enable_fragments: true
+
+            - grant: deny
+              source:
+                any: true
+              destination:
+                any: true
+              protocol_options:
+                ip: true
+              log:
+                set: true
