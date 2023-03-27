@@ -25,7 +25,7 @@ spoofing_ip = "192.168.180.160"
 target_ip="192.168.2.1 "
 
 #Create ACE
-with open("configure_acl.yml", 'r') as stream:
+with open("/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/ACL/configure_acl.yml", 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
