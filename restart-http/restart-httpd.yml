@@ -1,10 +1,10 @@
 ---
-- name: Restart http service
+- name: Playbook for restarting http service
   hosts: linux
   become: true
   
   tasks:
-  - name: Install Firewalld.
+  - name: Restart http servce.
     ansible.builtin.service:
        name: httpd
        state: restarted
