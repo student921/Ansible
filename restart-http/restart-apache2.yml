@@ -1,10 +1,10 @@
 ---
-- name: Playbook for restarting http service
+- name: Playbook for restarting apache2 webserver
   hosts: linux
   become: true
   
   tasks:
-  - name: Restart http servce.
+  - name: Restart apache2
     ansible.builtin.service:
        name: apache2
        state: restarted
