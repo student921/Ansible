@@ -2,6 +2,7 @@
 - name: Playbook for restarting apache2 webserver
   hosts: linux
   become: true
+  gather_facts: false
   
   tasks:
   - name: Restart apache2
