@@ -1,0 +1,10 @@
+---
+- name: Restart http service
+  hosts: linux
+  become: true
+  
+  tasks:
+  - name: Install Firewalld.
+    ansible.builtin.service:
+       name: httpd
+       state: restart
