@@ -8,7 +8,7 @@ ansible_ssh_private_key_file=~/.ssh/student921_idrsa
 
 [routers]
 
-r1
+R1
 
 [routers:vars]
 ansible_user=master
