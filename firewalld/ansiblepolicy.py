@@ -111,7 +111,7 @@ for policy in list_of_policies:
 
     for configuration in list_of_configurations:
 
-        if policy.ruleset.items() in configuration.ruleset.items():
+        if policy.ruleset.items() <= configuration.ruleset.items():
 
             break
 
