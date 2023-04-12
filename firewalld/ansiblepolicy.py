@@ -82,27 +82,6 @@ with open('/home/student921/ansible-security/workspace/firewalld/Ansible/firewal
     except yaml.YAMLError as error_message:
         print(error_message)
 
-#print("\n\n\n")
-
-#for i in list_of_configurations:
-    #print(i.__dict__)
-
-#for i in list_of_policies:
-    #print(i.__dict__)
-
-#print("RULESETS OF POLICIES")
-#for i in list_of_policies:
-    #print(i.name)
-    #print(i.ruleset)
-    #print(i.security_message)
-
-#print("\n\n\n")
-
-#print("RULESETS OF CONFIGURATIONS")
-#for i in list_of_configurations:
-    #print(i.name)
-    #print(i.ruleset)
-
 
 print(r"""
                            _       _
@@ -164,10 +143,3 @@ if list_of_security_issues:
 
 else:
     print("No possible security issues found in firewall configuration.")
-
-#print("\n\n")
-
-
-#print(list_of_policies[2].ruleset)
-#print(list_of_configurations[1].ruleset)
-#print(list_of_security_issues)
