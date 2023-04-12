@@ -18,7 +18,7 @@
     ansible.posix.firewalld:
         zone: public
         service: "https"
-        permanent: false
+        permanent: true
         state: enabled
         
   - name: Firewalld - Disable http for Zone public.
@@ -26,7 +26,7 @@
         zone: public
         service: "http"
         permanent: true
-        state: disable
+        state: disabled
        
   - name: Firewalld - Disable SSH for Zone public.
     ansible.posix.firewalld:
