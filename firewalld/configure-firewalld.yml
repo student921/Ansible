@@ -26,20 +26,20 @@
         zone: public
         service: "http"
         permanent: true
-        state: disabled
+        state: enabled
        
   - name: Firewalld - Disable SSH for Zone public.
     ansible.posix.firewalld:
         zone: public
         service: ssh
         permanent: true
-        state: disabled
+        state: enabled
         
   - name: Firewalld - Enable internal services only for the Ansible Security Tower.
     ansible.posix.firewalld:
         zone: internal
         source: 192.168.180.189
-        permanent: true
+        permanent: false
         state: enabled
         
   - name: Restart Firewalld.
