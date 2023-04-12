@@ -1,9 +1,9 @@
-# Program to convert yaml file to dictionary in order to check missconfigurations in Ansible Code
+# Ein Programm zur statischen Code Analyse einer firewalld-Konfiguration mittels Ansible.
 import yaml
 import csv
 from csv import DictReader
 
-#The security policies for firewalld are maintained in a csv file. The first step is to create a class that has the attributes of possible ansible firewalld configurations.
+# Die Sicherheitspolicen befinden sich in der Datei "policies.csv". Zunächst wird eine Klasse policy erstellt, um die jeweiligen Regel als Objekte initialisieren zu können.
 class policy:
     def __init__(self, name='', zone='', service='', source='', permanent='', state='', security_message=''):
         self.name = name
@@ -15,6 +15,7 @@ class policy:
         self.security_message = security_message
         self.ruleset = {}
 
+    #Diese Funktion nimmt nach der Initialisierung eines Policy-Objekts die relevanten Attribute entgegen und speichert sie als Schlüssel:Wert in einem Dictionary ab, das später zum Vergleich genommen wird.
     def set_policy_ruleset(self):
 
         for rule_key, rule_value in self.__dict__.items():
