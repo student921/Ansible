@@ -131,29 +131,20 @@ for policy in list_of_policies:
             
     # Wenn die obige if-Klausel nicht erfüllt wurde, dann bedeutet das, dass die Sicherheitspolice im Konfigurationsplaybook nicht umgesetzt wurde. 
     else:
-        # Im ersten Schritt wird die Liste der Sicherheitsprobleme um den individuellen Sicherheitshinweis des unerfüllten Policy-Objekts erweitert. 
+        # In diesem Schritt wird die Liste der Sicherheitsprobleme um den individuellen Sicherheitshinweis des unerfüllten Policy-Objekts erweitert.
+        # Des Weiteren wird die originale Sicherheitspolice als Dictionary-Objekt für den Schlüssel "policy_rules" übergeben.
         list_of_security_issues.append({"security_message" : policy.security_message, "policy_rules" : policy.ruleset.items()})
 
-        #for policy_key in policy.ruleset:
 
-            #for config_key in configuration.ruleset:
-
-               # if policy_key == config_key and policy.ruleset[policy_key] != configuration.ruleset[config_key]:
-
-                    #list_of_security_issues[-1]["policy_rules"] = policy.ruleset.items()
-
-                #else:
-                    #continue
-
-
+# Falls die Liste der Sicherheitsprobleme Listen-Objekte enthält, kann nun mit der Ausgabe der Sicherheitshinweise und Handlungsempfehlung begonnen werden.
 if list_of_security_issues:
     print("Ansible Policy found the following possible security isses:\n")
 
     for security_issue in list_of_security_issues:
-
+            # Ausgabe des Sicherheitshinweises
             print("[!] " + security_issue["security_message"])
-            print("[*] Please check the following policy parameters in configuration file:")
-            
+            print("[*] Please check if the following policy parameters are set in the configuration file:")
+            # Ausgabe der Handlungsempfehlung
             for key, value in security_issue["policy_rules"]:
                 print("[-] " + key + " : " + value)
 
