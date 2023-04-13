@@ -65,6 +65,7 @@ with open('/home/student921/ansible-security/workspace/firewalld/Ansible/firewal
                         permanent=row["permanent"],
                         state=row["state"],
                         service=row["service"],
+                        icmp_block_inversion=row["icmp_block_inversion"],
                         security_message=row["security_message"])
         new_policy.set_policy_ruleset()
         list_of_policies.append(new_policy)
@@ -87,7 +88,7 @@ with open('/home/student921/ansible-security/workspace/firewalld/Ansible/firewal
                 
                 # Ein Beispielhaftes Ergebnis der konvertierten Liste: 
                 # ['Firewalld - Enable https for Zone public.', {'zone': 'public', 'service': 'https', 'permanent': 'true', 'status': 'enabled'}]
-                # Die Listen-Objekte können nun eingesetzt werden, um das configuration-Objekt zu initialisieren.
+                # Die Listen-Elemente können nun eingesetzt werden, um das configuration-Objekt zu initialisieren.
                 new_configuration = configuration(name=config[0])
                 new_configuration.set_configuration_ruleset(config[1])
                 list_of_configurations.append(new_configuration)
@@ -137,7 +138,7 @@ for policy in list_of_policies:
         list_of_security_issues.append({"security_message" : policy.security_message, "policy_rules" : policy.ruleset.items()})
 
 
-# Falls die Liste der Sicherheitsprobleme Listen-Objekte enthält, kann nun mit der Ausgabe der Sicherheitshinweise und Handlungsempfehlung begonnen werden.
+# Falls die Liste der Sicherheitsprobleme Elemente enthält, kann nun mit der Ausgabe der Sicherheitshinweise und Handlungsempfehlung begonnen werden.
 if list_of_security_issues:
     print("Ansible Policy found the following possible security isses:\n")
 
