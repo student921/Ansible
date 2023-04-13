@@ -149,6 +149,7 @@ if list_of_security_issues:
             # Ausgabe der Handlungsempfehlung
             for key, value in security_issue["policy_rules"]:
                 print("[-] " + key + " : " + value)
+    return 0
 
 else:
     print("No possible security issues found in firewall configuration.")
