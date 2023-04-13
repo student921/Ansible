@@ -6,13 +6,14 @@ from csv import DictReader
 # Die Sicherheitspolicen befinden sich in der Datei "policies.csv".
 # Zunächst wird eine Klasse policy erstellt, um die jeweiligen Regel als Objekte initialisieren zu können.
 class policy:
-    def __init__(self, name='', zone='', service='', source='', permanent='', state='', security_message=''):
+    def __init__(self, name='', zone='', service='', source='', permanent='', state='', icmp_block_inversion='', security_message=''):
         self.name = name
         self.zone = zone
         self.service = service
         self.source = source
         self.permanent = permanent
         self.state = state
+        self.icmp_block_inversion = icmp_block_inversion
         self.security_message = security_message
         self.ruleset = {}
 
