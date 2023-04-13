@@ -138,11 +138,6 @@ for policy in list_of_policies:
         # Des Weiteren wird die originale Sicherheitspolice als Dictionary-Objekt für den Schlüssel "policy_rules" übergeben.
         list_of_security_issues.append({"security_message" : policy.security_message, "policy_rules" : policy.ruleset.items()})
 
-        
-for a in list_of_policies:
-    print(a.ruleset.items())
-for b in list_of_configurations:
-    print(b.ruleset.items())
 # Falls die Liste der Sicherheitsprobleme Elemente enthält, kann nun mit der Ausgabe der Sicherheitshinweise und Handlungsempfehlung begonnen werden.
 if list_of_security_issues:
     print("Ansible Policy found the following possible security isses:\n")
