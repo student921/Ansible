@@ -138,7 +138,7 @@ for policy in list_of_policies:
         list_of_security_issues.append({"security_message" : policy.security_message, "policy_rules" : policy.ruleset.items()})
 
 
-def security_issues_exist():
+def security_issues_exist:
     return 1
 
 # Falls die Liste der Sicherheitsprobleme Elemente enthält, kann nun mit der Ausgabe der Sicherheitshinweise und Handlungsempfehlung begonnen werden.
