@@ -33,7 +33,7 @@
         zone: public
         service: ssh
         permanent: true
-        state: enabled
+        state: disabled
         
   - name: Firewalld - Enable internal services only for the Ansible Security Tower.
     ansible.posix.firewalld:
