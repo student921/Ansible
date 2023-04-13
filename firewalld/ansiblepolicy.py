@@ -2,6 +2,7 @@
 import yaml
 import csv
 from csv import DictReader
+import sys
 
 # Die Sicherheitspolicen befinden sich in der Datei "policies.csv".
 # Zunächst wird eine Klasse policy erstellt, um die jeweiligen Regel als Objekte initialisieren zu können.
@@ -137,9 +138,6 @@ for policy in list_of_policies:
         # Des Weiteren wird die originale Sicherheitspolice als Dictionary-Objekt für den Schlüssel "policy_rules" übergeben.
         list_of_security_issues.append({"security_message" : policy.security_message, "policy_rules" : policy.ruleset.items()})
 
-def security_issues_exist():
-    return 1
-
 # Falls die Liste der Sicherheitsprobleme Elemente enthält, kann nun mit der Ausgabe der Sicherheitshinweise und Handlungsempfehlung begonnen werden.
 if list_of_security_issues:
     print("Ansible Policy found the following possible security isses:\n")
@@ -152,7 +150,7 @@ if list_of_security_issues:
             for key, value in security_issue["policy_rules"]:
                 print("[-] " + key + " : " + value)
                 
-    security_issues_exist()
+    sys.exit(1)
     
 else:
     print("No possible security issues found in firewall configuration.")
