@@ -138,9 +138,6 @@ for policy in list_of_policies:
         list_of_security_issues.append({"security_message" : policy.security_message, "policy_rules" : policy.ruleset.items()})
 
 
-def security_issues_exist():
-    return 1
-
 # Falls die Liste der Sicherheitsprobleme Elemente enthält, kann nun mit der Ausgabe der Sicherheitshinweise und Handlungsempfehlung begonnen werden.
 if list_of_security_issues:
     print("Ansible Policy found the following possible security isses:\n")
@@ -152,7 +149,6 @@ if list_of_security_issues:
             # Ausgabe der Handlungsempfehlung
             for key, value in security_issue["policy_rules"]:
                 print("[-] " + key + " : " + value)
-    security_issues_exist()
 
 else:
     print("No possible security issues found in firewall configuration.")
