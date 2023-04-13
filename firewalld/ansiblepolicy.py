@@ -85,7 +85,7 @@ with open('/home/student921/ansible-security/workspace/firewalld/Ansible/firewal
                 config = list(task.values())
                 
                 # Ein Beispielhaftes Ergebnis der konvertierten Liste: 
-                # ['Firewalld - Enable https for Zone public.', {'zone': 'public', 'service': 'ssh', 'permanent': 'true', 'status': 'enabled'}]
+                # ['Firewalld - Enable https for Zone public.', {'zone': 'public', 'service': 'https', 'permanent': 'true', 'status': 'enabled'}]
                 # Die Listen-Objekte können nun eingesetzt werden, um das configuration-Objekt zu initialisieren.
                 new_configuration = configuration(name=config[0])
                 new_configuration.set_configuration_ruleset(config[1])
