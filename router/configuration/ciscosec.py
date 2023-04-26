@@ -1,4 +1,5 @@
 import yaml
+import sys
 from functions_complex_checks import *
 
 #Mittels dieser Klasse wird jeder Task innerhalb des Playbooks configure-router.yml in ein einzelnes Objekt initialisiert.
@@ -162,7 +163,8 @@ if list_of_unenforced_security_practices:
         for command in unenforced_practice.configure_commands:
             print(command)
         print("\n")
-
+    
+    sys.exit(1)
 
 else:
     print("No security issues found!")
