@@ -1,7 +1,7 @@
 import yaml
 from functions_complex_checks import *
 
-#Mittels dieser Klasse wird jeder Task innerhalb des Playbooks configure_router.yml in ein einzelnes Objekt initialisiert.
+#Mittels dieser Klasse wird jeder Task innerhalb des Playbooks configure-router.yml in ein einzelnes Objekt initialisiert.
 class ios_task:
     def __init__(self, name, commands):
         self.name=name
@@ -67,7 +67,7 @@ with open('/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/c
         print(error_message)
 
 #Nun werden die einzelnen Tasks des Playbooks configure_router.yml als Objekte initialisiert.
-with open('/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/configuration/configure_router.yml', 'r') as stream:
+with open('/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/configuration/configure-router.yml', 'r') as stream:
     try:
         d=yaml.load(stream, Loader=yaml.BaseLoader)
 
