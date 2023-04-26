@@ -102,26 +102,26 @@ for complex_cis_recommendation in list_of_complex_cis_recommendations:
     match complex_cis_recommendation.name:
         case "Set 'exec-timeout' to less than or equal to 10 minutes for 'line aux 0'":
 		#Wenn Sicherheitsüberprüft ein Problem identifizert, wird die Sicherheitskonfiguration als Objekt zurückgegeben und in check_result initialisiert.
-            check_result = check_exec_timeout_line_aux0_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
-	    if check_result:
+        	check_result = check_exec_timeout_line_aux0_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
+	    	if check_result:
 		#Wenn die Variable check_result initialisiert wurde, wird die Liste der nicht-durchgesetzten Sicherheitskonfigurationen erweitert.
-                list_of_unenforced_security_practices.append(check_result)
+                	list_of_unenforced_security_practices.append(check_result)
         case "Set 'exec-timeout' to less than or equal to 10 minutes 'line console 0'":
-            check_result = check_exec_timeout_line_console0_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
-            if check_result:
-                list_of_unenforced_security_practices.append(check_result)
+		check_result = check_exec_timeout_line_console0_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
+            	if check_result:
+                	list_of_unenforced_security_practices.append(check_result)
         case "Set 'exec-timeout' to less than or equal to 10 minutes 'line vty'":
-            check_result = check_exec_timeout_line_vty015_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
-            if check_result:
-                list_of_unenforced_security_practices.append(check_result)
+            	check_result = check_exec_timeout_line_vty015_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
+            	if check_result:
+                	list_of_unenforced_security_practices.append(check_result)
         case "Set 'exec-timeout' less than or equal to 10 minutes 'line tty'":
-            check_result = check_exec_timeout_line_tty_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
-            if check_result:
-                list_of_unenforced_security_practices.append(check_result)
+            	check_result = check_exec_timeout_line_tty_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
+            	if check_result:
+                	list_of_unenforced_security_practices.append(check_result)
         case "Set 'transport input ssh' for 'line vty' connections":
-            check_result = check_transport_input_ssh_vty015(complex_cis_recommendation, list_of_ios_tasks)
-            if check_result:
-                list_of_unenforced_security_practices.append(check_result)
+            	check_result = check_transport_input_ssh_vty015(complex_cis_recommendation, list_of_ios_tasks)
+            	if check_result:
+                	list_of_unenforced_security_practices.append(check_result)
 
 print(r"""
 
