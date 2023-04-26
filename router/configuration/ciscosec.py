@@ -108,7 +108,7 @@ for complex_cis_recommendation in list_of_complex_cis_recommendations:
 				list_of_unenforced_security_practices.append(check_result)
 		case "Set 'exec-timeout' to less than or equal to 10 minutes 'line console 0'":
 			check_result = check_exec_timeout_line_console0_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
-            		if check_result:
+			if check_result:
                 		list_of_unenforced_security_practices.append(check_result)
 		case "Set 'exec-timeout' to less than or equal to 10 minutes 'line vty'":
 			check_result = check_exec_timeout_line_vty015_10_minutes(complex_cis_recommendation, list_of_ios_tasks)
