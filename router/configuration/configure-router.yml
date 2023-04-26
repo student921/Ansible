@@ -85,7 +85,5 @@
         - exit
         - line console 0
         - exec-timeout 10 0
-        - exit 
-        - logging source-interface loopback 1
-        - enable secret arbeit
+        - exit
         
