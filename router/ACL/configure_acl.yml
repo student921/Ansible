@@ -46,60 +46,12 @@
                 wildcard_bits: 0.0.0.255
                 port_protocol:
                   eq: ftp
-            - grant: deny
-              sequence: 12
-              protocol_options:
-                tcp:
-                  ack: true
-              source:
-                address: 192.168.180.0
-                wildcard_bits: 0.0.0.255
-              destination:
-                address: 192.168.2.0
-                wildcard_bits: 0.0.0.255
-                port_protocol:
-                  eq: 69
 
-            - grant: permit
+            - grant: deny
               sequence: 20
-              protocol_options:
-                ip: true
-                udp: true
               source:
                 address: 192.168.180.0
                 wildcard_bits: 0.0.0.255
-              destination:
-                host: 192.168.180.2
-                wildcard_bits: 0.0.0.255
-            - grant: permit
-              sequence: 21
-              protocol_options:
-                tcp:
-                  syn: true
-              source:
-                host: 192.168.180.189
-              destination:
-                address: 192.168.2.0
-                wildcard_bits: 0.0.0.255            
-                port_protocol:
-                  eq: 22
-            - grant: permit
-              sequence: 22
-              protocol_options:
-                tcp:
-                  syn: true
-              source:
-                any: true
-              destination:
-                address: 192.168.2.0
-                wildcard_bits: 0.0.0.255            
-                port_protocol:
-                  eq: 443
-
-            - grant: deny
-              sequence: 30
-              source:
-                address: any
               destination:
                 address: 192.168.2.0
                 wildcard_bits: 0.0.0.255            
@@ -107,7 +59,7 @@
                 icmp: 
                  redirect: true
             - grant: permit
-              sequence: 31
+              sequence: 21
               source:
                 address: 192.168.180.0
                 wildcard_bits: 0.0.0.255
@@ -118,7 +70,7 @@
                 icmp: 
                   echo_reply: true
             - grant: permit
-              sequence: 32
+              sequence: 22
               source:
                 address: 192.168.180.0
                 wildcard_bits: 0.0.0.255
@@ -129,7 +81,7 @@
                 icmp: 
                   time_exceeded: true
             - grant: permit
-              sequence: 33
+              sequence: 23
               source:
                 address: 192.168.180.0
                 wildcard_bits: 0.0.0.255
@@ -141,7 +93,7 @@
                   unreachable: true
                   
             - grant: deny
-              sequence: 34
+              sequence: 24
               protocol_options:
                 ip: true              
               source:
@@ -150,6 +102,31 @@
                 address: 192.168.2.0
                 wildcard_bits: 0.0.0.255            
               enable_fragments: true
+              
+            - grant: permit
+              sequence: 41
+              protocol_options:
+                tcp:
+                  syn: true
+              source:
+                host: 192.168.180.189
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+                port_protocol:
+                  eq: 22
+            - grant: permit
+              sequence: 42
+              protocol_options:
+                tcp:
+                  syn: true
+              source:
+                any: true
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+                port_protocol:
+                  eq: 443
 
             - grant: deny
               source:
