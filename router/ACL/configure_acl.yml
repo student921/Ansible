@@ -97,7 +97,8 @@
               protocol_options:
                 ip: true              
               source:
-                address: any
+                address: 192.168.180.0
+                wildcard_bits: 0.0.0.255
               destination:
                 address: 192.168.2.0
                 wildcard_bits: 0.0.0.255            
