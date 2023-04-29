@@ -35,7 +35,7 @@ def generate_nmap_command(ace):
 list_of_aces = []
 
 #Create ACE
-with open("configure_acl.yml", 'r') as stream:
+with open("'/home/student921/ansible-security/workspace/CiscoSec/Ansible/router/ACL/configure_acl.yml", 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
