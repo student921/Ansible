@@ -24,7 +24,7 @@ def generate_nmap_command(ace):
         nmap_command +=  " -p" + ace.destination["port_protocol"]["eq"]
 
     if ace.enable_fragments:
-        nmap_command += " -F"
+        nmap_command += " -f"
 
     if "icmp" in ace.protocol_options.keys():
             nmap_command = nmap_command.replace("-Pn", "-PE")
