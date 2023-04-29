@@ -20,7 +20,9 @@
             aces:
             
             - grant: permit
-              sequence: 10
+              sequence: 10              
+              protocol_options:
+                ip: true 
               source:
                 any: true
               destination:
