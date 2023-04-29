@@ -68,7 +68,7 @@
                 wildcard_bits: 0.0.0.255            
               enable_fragments: true
  
-             - grant: permit
+            - grant: permit
               sequence: 40
               protocol_options:
                 tcp:
