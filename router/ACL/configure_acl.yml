@@ -18,6 +18,15 @@
           - name: security_acl
             acl_type: extended
             aces:           
+
+           - grant: permit
+              sequence: 10
+              protocol_options:
+                ip: true
+              source:
+                any: true
+              destination:
+                host: 192.168.2.1
                   
             - grant: deny
               sequence: 11
@@ -44,8 +53,7 @@
                 wildcard_bits: 0.0.0.255
                 port_protocol:
                   eq: ftp
-
-                  
+      
             - grant: deny
               sequence: 24
               protocol_options:
@@ -56,7 +64,18 @@
                 address: 192.168.2.0
                 wildcard_bits: 0.0.0.255            
               enable_fragments: true
- 
+
+            - grant: deny
+              sequence: 25
+              source:
+                any: true
+              destination:
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255            
+              protocol_options:
+                icmp: 
+                  administratively_prohibited: true  
+                  
             - grant: permit
               sequence: 40
               protocol_options:
@@ -94,4 +113,3 @@
                 wildcard_bits: 0.0.0.255            
                 port_protocol:
                   eq: 443
-                  
