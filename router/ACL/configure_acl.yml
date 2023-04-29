@@ -75,7 +75,8 @@
               source:
                 host: 192.168.180.189
               destination:
-                host: 192.168.180.2
+                address: 192.168.2.0
+                wildcard_bits: 0.0.0.255
                 port_protocol:
                   eq: 22
            
