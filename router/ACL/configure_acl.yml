@@ -25,8 +25,7 @@
                 tcp:
                   ack: true
               source:
-                address: 192.168.180.0
-                wildcard_bits: 0.0.0.255
+                any: true
               destination:
                 address: 192.168.2.0
                 wildcard_bits: 0.0.0.255
@@ -39,8 +38,7 @@
                 tcp:
                   ack: true          
               source:
-                address: 192.168.180.0
-                wildcard_bits: 0.0.0.255
+                any: true
               destination:
                 address: 192.168.2.0
                 wildcard_bits: 0.0.0.255
@@ -50,55 +48,21 @@
             - grant: deny
               sequence: 20
               source:
-                address: 192.168.180.0
-                wildcard_bits: 0.0.0.255
+                any: true
               destination:
                 address: 192.168.2.0
                 wildcard_bits: 0.0.0.255            
               protocol_options:
                 icmp: 
-                 redirect: true
-            - grant: permit
-              sequence: 21
-              source:
-                address: 192.168.180.0
-                wildcard_bits: 0.0.0.255
-              destination:
-                address: 192.168.2.0
-                wildcard_bits: 0.0.0.255            
-              protocol_options:
-                icmp: 
-                  echo_reply: true
-            - grant: permit
-              sequence: 22
-              source:
-                address: 192.168.180.0
-                wildcard_bits: 0.0.0.255
-              destination:
-                address: 192.168.2.0
-                wildcard_bits: 0.0.0.255            
-              protocol_options:
-                icmp: 
-                  time_exceeded: true
-            - grant: permit
-              sequence: 23
-              source:
-                address: 192.168.180.0
-                wildcard_bits: 0.0.0.255
-              destination:
-                address: 192.168.2.0
-                wildcard_bits: 0.0.0.255            
-              protocol_options:
-                icmp: 
-                  unreachable: true
+                  administratively_prohibited: true
+
                   
             - grant: deny
               sequence: 24
               protocol_options:
                 ip: true              
               source:
-                address: 192.168.180.0
-                wildcard_bits: 0.0.0.255
+                any: true
               destination:
                 address: 192.168.2.0
                 wildcard_bits: 0.0.0.255            
