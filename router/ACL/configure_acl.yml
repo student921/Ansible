@@ -98,6 +98,6 @@
               protocol_options:
                 ip: true
               source:
-                any: true
+                host: 192.168.180.189
               destination:
                 host: 192.168.180.2
