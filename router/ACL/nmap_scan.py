@@ -27,7 +27,7 @@ def generate_nmap_command(ace):
         nmap_command += " -F"
 
     if "icmp" in ace.protocol_options.keys():
-            nmap_command = nmap_command.replace("-Pn", "")
+            nmap_command = nmap_command.replace("-Pn", "-PE")
 
     nmap_command += " "+target_ip
     return nmap_command
