@@ -66,3 +66,11 @@ for ace_entry in list_of_aces:
     print("Scan command: " + generate_nmap_command(ace_entry))
     scan_result = subprocess.run(generate_nmap_command(ace_entry) ,shell=True, capture_output=True, text=True)
     print(scan_result.stdout)
+    
+    #Wenn ein Spoofing-Test erfolgt ist, soll der gleiche Befehl nochmal ohne die gespoofte Adresse erfolgen, um die Funktionalität zu verifizieren.
+    if general_spoofing_command in generate_nmap_command(ace_entry):
+        command = generate_nmap_command(ace_entry).replace(general_spoofing_command, "")
+        print("Scan command: " + command)
+        scan_result = subprocess.run(command ,shell=True, capture_output=True, text=True)
+        print(scan_result.stdout)
+    
