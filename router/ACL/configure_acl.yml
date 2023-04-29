@@ -102,13 +102,3 @@
                 wildcard_bits: 0.0.0.255            
                 port_protocol:
                   eq: 443
-
-            - grant: deny
-              source:
-                any: true
-              destination:
-                any: true
-              protocol_options:
-                ip: true
-              log:
-                set: true
