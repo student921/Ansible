@@ -57,10 +57,6 @@ with open("/home/student921/ansible-security/workspace/acl_security/Ansible/rout
     except yaml.YAMLError as error_message:
         print(error_message)
 
-
-for ace_entry in list_of_aces:
-    print(generate_nmap_command(ace_entry))
-
 #execute
 for ace_entry in list_of_aces:
     print("Scan command: " + generate_nmap_command(ace_entry))
