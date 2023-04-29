@@ -19,7 +19,7 @@
             acl_type: extended
             aces:           
 
-           - grant: permit
+            - grant: permit
               sequence: 10
               protocol_options:
                 ip: true
