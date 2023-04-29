@@ -18,15 +18,6 @@
           - name: security_acl
             acl_type: extended
             aces:           
-
-            - grant: permit
-              sequence: 10
-              protocol_options:
-                ip: true
-              source:
-                any: true
-              destination:
-                host: 192.168.180.2
                   
             - grant: deny
               sequence: 11
@@ -87,22 +78,9 @@
                 host: 192.168.180.2
                 port_protocol:
                   eq: 22
-                  
+           
             - grant: permit
               sequence: 41
-              protocol_options:
-                tcp:
-                  syn: true
-              source:
-                host: 192.168.180.189
-              destination:
-                address: 192.168.2.0
-                wildcard_bits: 0.0.0.255            
-                port_protocol:
-                  eq: 22
-                  
-            - grant: permit
-              sequence: 42
               protocol_options:
                 tcp:
                   syn: true
@@ -113,3 +91,12 @@
                 wildcard_bits: 0.0.0.255            
                 port_protocol:
                   eq: 443
+
+            - grant: permit
+              sequence: 42
+              protocol_options:
+                ip: true
+              source:
+                any: true
+              destination:
+                host: 192.168.180.2
