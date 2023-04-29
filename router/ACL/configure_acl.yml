@@ -28,7 +28,7 @@
                 wildcard_bits: 0.0.0.255
                   
             - grant: deny
-              sequence: 10
+              sequence: 11
               protocol_options:
                 tcp:
                   ack: true
@@ -41,7 +41,7 @@
                   eq: telnet
 
             - grant: deny
-              sequence: 11
+              sequence: 12
               protocol_options:
                 tcp:
                   ack: true          
