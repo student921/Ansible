@@ -8,24 +8,34 @@ class ACE:
         self.source=source
         self.destination=destination
         self.enable_fragments=enable_fragments
-  
 
-class nmap_command:
-    def __init__(self, target):
-        self.standard_arguments = "-sS -Pn "
-        self.target=target
-        self.protocol=""
-        self.optional=""
+target_ip = "192.168.2.1"
+general_spoofing_command = " -S 192.168.180.160"
 
+def generate_nmap_command(ace):
+    #Zunächst wird ein grundleger Nmap-Befehl generiert, der im Laufe der Funktion um die Eigenschaften der ACEs erweitert wird.
+    nmap_command = 'nmap -sS -Pn'
+
+    #Zunächst wird überprüft, ob ein Spoofing-Test notwendig ist.
+    if "host" in ace.source.keys():
+        nmap_command += general_spoofing_command
+
+    if "port_protocol" in ace_entry.destination.keys():
+        nmap_command +=  " -p" + ace.destination["port_protocol"]["eq"]
+
+    if ace.enable_fragments:
+        nmap_command += " -F"
+
+    if "icmp" in ace.protocol_options.keys():
+            nmap_command = nmap_command.replace("-Pn", "")
+
+    nmap_command += " "+target_ip
+    return nmap_command
 
 list_of_aces = []
-list_of_nmap_objects = []
-list_of_nmap_commands = []
-spoofing_ip = "192.168.180.160"
-target_ip="192.168.2.1 "
 
 #Create ACE
-with open("/home/student921/ansible-security/workspace/acl_security/Ansible/router/ACL/configure_acl.yml", 'r') as stream:
+with open("configure_acl.yml", 'r') as stream:
     try:
     # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
@@ -48,48 +58,11 @@ with open("/home/student921/ansible-security/workspace/acl_security/Ansible/rout
         print(error_message)
 
 
-#Create nmap_commands
-for ace in list_of_aces:
-    try:
-        protocol = ace.protocol_options.keys()
-        if "tcp" in protocol or "ip" in protocol:
-            nmap_command_entry = nmap_command(target=target_ip)
-            
-            if ace.enable_fragments == "true":
-                nmap_command_entry.optional="-f"
-
-            try:
-                if ace.destination["port_protocol"]["eq"]:
-                    nmap_command_entry.protocol="-p"+ace.destination["port_protocol"]["eq"]
-            except:
-                pass
-
-            try:
-                if ace.source["host"]:
-                    nmap_command_entry.optional = " -S "+spoofing_ip
-            except:
-                pass
-        
-            list_of_nmap_objects.append(nmap_command_entry)
-    
-    except:
-        pass
-
-
-for object in list_of_nmap_objects:
-    if object.protocol or object.optional:
-        nmap_c = "nmap "+ object.standard_arguments + object.target + object.protocol + object.optional
-        if "-f" in nmap_c:
-            nmap_c=nmap_c+" -p22"
-        list_of_nmap_commands.append(nmap_c)
-        if "-S" in nmap_c:
-            nmap_c = nmap_c.replace("-S "+spoofing_ip, "")
-            list_of_nmap_commands.append(nmap_c)
+for ace_entry in list_of_aces:
+    print(generate_nmap_command(ace_entry))
 
 #execute
-for command in list_of_nmap_commands:
-    print("Scan command: " + command)
-    scan_result = subprocess.run(command ,shell=True, capture_output=True, text=True)
+for ace_entry in list_of_aces:
+    print("Scan command: " + generate_nmap_command(ace_entry))
+    scan_result = subprocess.run(generate_nmap_command(ace_entry) ,shell=True, capture_output=True, text=True)
     print(scan_result.stdout)
-
- 
