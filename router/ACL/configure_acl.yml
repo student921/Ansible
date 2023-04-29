@@ -45,17 +45,6 @@
                 port_protocol:
                   eq: ftp
 
-            - grant: deny
-              sequence: 20
-              source:
-                any: true
-              destination:
-                address: 192.168.2.0
-                wildcard_bits: 0.0.0.255            
-              protocol_options:
-                icmp: 
-                  administratively_prohibited: true
-
                   
             - grant: deny
               sequence: 24
