@@ -16,30 +16,31 @@ def generate_nmap_command(ace):
     #Zunächst wird ein grundleger Nmap-Befehl generiert, der im Laufe der Funktion um die Eigenschaften der ACEs erweitert wird.
     nmap_command = 'nmap -sS -Pn'
 
-    #Zunächst wird überprüft, ob ein Spoofing-Test notwendig ist.
+    #Zunächst wird überprüft, ob ein Spoofing-Test notwendig ist. Dies wäre der Fall, wenn ACEs auf einzelne Hosts beschränkt werden.
     if "host" in ace.source.keys():
         nmap_command += general_spoofing_command
-
+    #Extrahiere den Dienst oder die Portnummer für einen spezifischen Portscan.
     if "port_protocol" in ace_entry.destination.keys():
         nmap_command +=  " -p" + ace.destination["port_protocol"]["eq"]
-
+    #Ist die Fragmentierungsoption gesetzt, soll Nmap fragmentierte Pakete an das Ziel übermitteln.
     if ace.enable_fragments:
         nmap_command += " -f"
-
+    #Betriffen die Regeln ICMP, sollen explizite ICMP-Anforderungen an das Ziel gesendet werden.
     if "icmp" in ace.protocol_options.keys():
             nmap_command = nmap_command.replace("-Pn", "-PE")
 
     nmap_command += " "+target_ip
     return nmap_command
 
+#Hiermit soll eine Liste erstellt und mit den einzelnen ACEs der configure_acl.yml befüllt werden
 list_of_aces = []
 
-#Create ACE
+#Öffne das Konfigurationsplaybook und lade die Daten als Python Dictionary Objekt
 with open("/home/student921/ansible-security/workspace/acl_security/Ansible/router/ACL/configure_acl.yml", 'r') as stream:
     try:
-    # Convert yaml document to python object
         d=yaml.load(stream, Loader=yaml.BaseLoader)
-
+        
+        #Im Dictionary Objekt werden nun die einzelnen Attribute aus den ACE Konfigurationen geparsed und als Objekt initialisiert.
         for acl in d[0]["tasks"]:
             for ace in acl["cisco.ios.ios_acls"]["config"][0]["acls"][0]["aces"]:
                 ace_entry=ACE(grant=ace["grant"],
@@ -57,7 +58,7 @@ with open("/home/student921/ansible-security/workspace/acl_security/Ansible/rout
     except yaml.YAMLError as error_message:
         print(error_message)
 
-#execute
+#Iteriere durch die Liste oder ACE Objekte, eneriere für jede ACE den entsprechenden Nmap-Prüfscan und führe ihn durch.
 for ace_entry in list_of_aces:
     print("Scan command: " + generate_nmap_command(ace_entry))
     scan_result = subprocess.run(generate_nmap_command(ace_entry) ,shell=True, capture_output=True, text=True)
