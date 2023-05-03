@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Cloning/Pulling from Repository') {
+           steps {
+                
+                script {
+                    
+                    if (fileExists('./Ansible')) {
+                    sh "cd Ansible && git pull"
+                    } else {
+                        sh "git clone 'https://github.com/student921/Ansible.git'"
+                    
+                    }
+                }
+            }
+        }
+        stage('Pre-Deployment Test: Static Code Analysis') {
+            steps {
+                script {
+			        def return_value = sh(returnStatus: true, script: 'python Ansible/router/configuration/ciscosec.py')
+			        if (return_value == 1) {
+				        input message: 'Es wurden mögliche Sicherheitsprobleme identifiziert, möchten Sie fortfahren?', ok: 'Weiter'
+			        }
+                }
+            }
+        }
+        stage('Deployment') {
+            steps {
+                withCredentials([
+                    usernamePassword(credentialsId: 'ssh', passwordVariable: 'router_ssh_pass', usernameVariable: 'router_user'), 
+                    string(credentialsId: 'router-privilege-esc', variable: 'router_pass')]) {
+                        sh '''ansible-playbook Ansible/router/configuration/configure-router.yml 
+                            -i Ansible/router/configuration/hosts -e 
+                            "ansible_user=$router_user 
+                            ansible_ssh_pass=$router_ssh_pass 
+                            ansible_become_password=$router_pass"'''
+                }
+            }
+            
+        }
+        stage('Post-Deployment Test - Nipper Security Audit') {
+            steps {
+                withCredentials([
+                    usernamePassword(credentialsId: 'ssh', passwordVariable: 'router_ssh_pass', usernameVariable: 'router_user'), 
+                    string(credentialsId: 'router-privilege-esc', variable: 'router_pass')]) {
+                        sh 'ansible-playbook Ansible/router/configuration/extract_running_config.yml -i Ansible/router/configuration/hosts -e "ansible_user=$router_user ansible_ssh_pass=$router_ssh_pass ansible_become_password=$router_pass"'
+                }
+                sh "nipper --ios-router --input=/home/student921/r1-confg --output=/media/sf_shared-folder/report.html"
+            }    
+        }
+        stage('Generating Overview of Security Issues') {
+            steps {
+                sh "python /media/sf_shared-folder/report_parse.py"
+            }    
+        }
+    }
+}

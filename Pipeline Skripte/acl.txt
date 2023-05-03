@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Cloning/Pulling from Repository') {
+           steps {
+                
+                script {
+                    
+                    if (fileExists('./Ansible')) {
+                    sh "cd Ansible && git pull"
+                    } else {
+                        sh "git clone 'https://github.com/student921/Ansible.git'"
+                    
+                    }
+                }
+            }
+        }
+        stage('Pre-Deployment: Unassign current ACL') {
+            steps {
+                sh "ansible-playbook -i Ansible/router/ACL/hosts Ansible/router/ACL/unassign_acl.yml"
+            }
+        }
+        stage('Deployment #1: Create ACL on Router') {
+            steps {
+                sh "ansible-playbook -i Ansible/router/ACL/hosts Ansible/router/ACL/configure_acl.yml"
+            }
+        }
+        stage('Deployment #2: Assign ACL to vlan3') {
+            steps {
+                sh "ansible-playbook -i Ansible/router/ACL/hosts Ansible/router/ACL/assign_acl.yml"
+            }    
+        }
+        stage('Functional Security Test: Contextbased Nmap Scan') {
+            steps {
+                sh 'sudo ip addr add 192.168.180.160/24 dev eth0 || true'
+                sh 'sudo python3 Ansible/router/ACL/contextbased_nmap_scan.py'
+            }    
+        }
+    }
+}
